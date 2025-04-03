@@ -1,10 +1,11 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { appContext } from "../App";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
-  const { user, setUser, users } = useContext(appContext);
+  const { user, setUser, users,cart } = useContext(appContext);
   const [msg, setMsg] = useState();
   const Navigate = useNavigate();
   const handleSubmit = () => {
@@ -13,7 +14,11 @@ export default function Login() {
     );
     if (found) {
       user.name = found.name;
-      Navigate("/");
+      if (Object.keys(cart).length > 0) {
+        Navigate("/react-store-a/cart");
+      } else {
+        Navigate("/react-store-a/");
+      }
     } else {
       setMsg("Invalid User");
     }
@@ -40,7 +45,7 @@ export default function Login() {
         <button onClick={handleSubmit}>Log In</button>
       </p>
       <p>
-        <Link to="../register">Create Account</Link>
+        <Link to="/react-store-a/register">Create Account</Link>
       </p>
     </div>
   );
