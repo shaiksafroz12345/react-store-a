@@ -4,7 +4,7 @@ import { useState, useRef, useContext } from "react";
 import { appContext } from "../App";
 import "./Register.css";
 export default function Register() {
-  const { users, setUsers, user, setUser } = useContext(appContext);
+  const { users, setUsers, user, setUser,cart } = useContext(appContext);
   const [msg, setMsg] = useState();
   const msgRef = useRef();
   const Navigate = useNavigate()
@@ -17,7 +17,11 @@ export default function Register() {
       setMsg();
       setUsers([...users, user]);
       //setUser({ ...user, name: "", email: "", password: "" });
-      Navigate("/")
+      if (Object.keys(cart).length > 0) {
+        Navigate("/react-store-a/cart");
+      } else {
+        Navigate("/react-store-a/");
+      }
     }
   };
   const handleDelete = (email) => {
@@ -56,7 +60,7 @@ export default function Register() {
           <button onClick={handleSubmit}>Submit</button>
         </p>
         <p>
-          <Link to="../login">Already a member? Login here!</Link>
+          <Link to="/react-store-a/login">Already a member? Login here!</Link>
         </p>
       </div>
       <div className="App-Register-Box">
