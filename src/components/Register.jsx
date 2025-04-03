@@ -1,25 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useState,useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef, useContext } from "react";
+import { appContext } from "../App";
 import "./Register.css";
 export default function Register() {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
+  const { users, setUsers, user, setUser } = useContext(appContext);
   const [msg, setMsg] = useState();
-  const msgRef=useRef();
+  const msgRef = useRef();
+  const Navigate = useNavigate()
   const handleSubmit = () => {
     const found = users.find((value) => value.email === user.email);
     if (found) {
       setMsg("User already exists");
-      msgRef.current.style.color="red";
+      msgRef.current.style.color = "red";
     } else {
       setMsg();
       setUsers([...users, user]);
-      setUser({ ...user, name: "", email: "", password: "" });
+      //setUser({ ...user, name: "", email: "", password: "" });
+      Navigate("/")
     }
   };
   const handleDelete = (email) => {
-    setUsers(users.filter((value) => value.email != email));
+    setUsers(users.filter((value) => value.email !== email));
   };
   return (
     <div className="App-Register-Row">
